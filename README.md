@@ -1,13 +1,9 @@
-//*********************************************************************
-//
-//  File:       gptd2gp.java
-//  Header:     none
-//  Purpose:    External tabel based on a JDBC conection to teradata with these arg
-//              arg[0] select to be executed
-//              arg[1] ip of the Teradata host
-//
-//
-//*********************************************************************
+File:       gptd2gp.java
+Purpose:    External tabel based on a JDBC conection to teradata with these arg
+              arg[0] select to be executed
+	      arg[1] ip of the Teradata host
+
+EXAMPLE
 
 CREATE EXTERNAL WEB TABLE  test.t1
 (tablename TEXT,
