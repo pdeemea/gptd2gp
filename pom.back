@@ -30,7 +30,7 @@
             <resource>
                 <directory>${basedir}</directory>
                 <includes>
-                    <include>src/**</include>
+                    <include>src/main/**</include>
                 </includes>
             </resource>
         </resources>
@@ -51,7 +51,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-			<group>csoemea</group>
+			<group>com.pivotal.csoemea</group>
                             <appendAssemblyId>false</appendAssemblyId>
                             <finalName>gptdtgp-${BUILD_NUMBER}</finalName>
                         </configuration>
@@ -60,25 +60,59 @@
             </plugin>
         </plugins>
     </build>
-<profiles>
+    <profiles>
         <profile>
             <id>rpm</id>
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>target/classes</directory>
+                                            <includes>
+                                                <include>*.class</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>rpm-maven-plugin</artifactId>
-                        <configuration>
-                            <description>gp2tdgp</description>
-                            <version>0.1</version>
-                            <release>0.1</release>
-<group>com.pivotal.csoemea</group>
+                            <version>2.1.4</version>
+				<executions>
+         			 <execution>
+            			<id>generate-rpm</id>
+            			<goals>
+              			<goal>rpm</goal>
+            			</goals>
+          			</execution>
+        			</executions>
+			  <configuration>
+                            <description>gptdtgp</description>	
                             <mappings>
                                 <mapping>
-                                    <directory>${rpm.install.dir}/gptd2gp</directory>
+                                    <directory>${rpm.install.dir}/gptdtgp</directory>
                                     <sources>
                                         <source>
-                                            <location>${project.basedir}/src/main/</location>
+                                            <location>${project.basedir}/src/main</location>
                                         </source>
                                     </sources>
                                 </mapping>
@@ -89,6 +123,5 @@
             </build>
         </profile>
     </profiles>
-
 </project>
 
